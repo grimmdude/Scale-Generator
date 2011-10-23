@@ -1,0 +1,15 @@
+Use:
+
+scaleGen(start, scale) returns an object called 'the_key' which is structured like so:
+
+the_key.the_scale = An array containing the notes of the scale
+the_key.diatonic_triad_notes = An array containing an array containing notes for each diatonic triad.  eg ['C','E','G']
+the_key.diatonic_triad_names = An array containing the names of each diatonic triad.  eg ['CM','Dm','Em','FM','GM','Am','Bdim']
+
+
+
+Start: Can be any note; C, D#, Eb, G, É
+Scale: major, blues, natural_minor, harmonic_minor, melodic_minor
+
+Example: scaleGen('Eb', 'natural_minor') -> this will return 
+
