@@ -69,9 +69,7 @@ def scaleGen(start = 0, scale = 'major'):
 	#use the start_reference array to pull notes from the notes array 
 	#referencing from the start note.
 	i = 0
-	
-	print len(scaleIntervals)
-	#REMOVED = SIGN BELOW...
+
 	while (i <= len(scaleIntervals)):
 		
 		#add the current interval and add one by one to the start_reference array
