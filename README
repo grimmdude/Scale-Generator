@@ -18,6 +18,7 @@ scale_type = Returns the type of scale.  eg 'major'
 
 scale_intervals = Returns an array containing the intervals of the scale in half steps.  eg [2,2,1,2,2,2]
 
+The function can be used as a javascript file (scale_generator.js) or as a python module (scale_generator.py)
 
 =Params=
 
