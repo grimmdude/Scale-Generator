@@ -145,32 +145,29 @@ def scaleGen(start = 0, scale = 'major'):
 			fifth_extend = notes_array.index(s[chord_note(5)])
 			
 		#define the formulas for each triad type by using the notes_array index.  
-		#return True if the formula matches.
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['major'][0] and fifth_extend - third_extend == triads['major'][1]):
-			M = True
+		first_third = third_extend - notes_array.index(s[chord_note(1)])
+		second_third = fifth_extend - third_extend
+		
+		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'M')
 			
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['minor'][0] and fifth_extend - third_extend == triads['minor'][1]):
-			m = True
+		if (first_third == triads['minor'][0] and second_third == triads['minor'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'm')
 
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['dim'][0] and fifth_extend - third_extend == triads['dim'][1]):
-			dim = True
+		if (first_third == triads['dim'][0] and second_third == triads['dim'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'dim')
 			
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['aug'][0] and fifth_extend - third_extend == triads['aug'][1]):
-			aug = True
+		if (first_third == triads['aug'][0] and second_third == triads['aug'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'aug')
 		
-		#define formulas for seventh chords
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['major'][0] and fifth_extend - third_extend == triads['major'][1]):
-			M7 = True
+		#define formulas for seventh chords - currently not being utilized
+		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
 
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['major'][0] and fifth_extend - third_extend == triads['major'][1]):
-			Dom7 = True
+
+		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
+
 			
-		if (third_extend - notes_array.index(s[chord_note(1)]) == triads['major'][0] and fifth_extend - third_extend == triads['major'][1]):
-			m7 = True
+		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
 		
 		i += 1
 
