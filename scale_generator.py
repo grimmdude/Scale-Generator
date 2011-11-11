@@ -151,23 +151,23 @@ def scaleGen(start = 0, scale = 'major'):
 		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'M')
 			
-		if (first_third == triads['minor'][0] and second_third == triads['minor'][1]):
+		elif (first_third == triads['minor'][0] and second_third == triads['minor'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'm')
 
-		if (first_third == triads['dim'][0] and second_third == triads['dim'][1]):
+		elif (first_third == triads['dim'][0] and second_third == triads['dim'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'dim')
 			
-		if (first_third == triads['aug'][0] and second_third == triads['aug'][1]):
+		elif (first_third == triads['aug'][0] and second_third == triads['aug'][1]):
 			the_key['diatonic_triad_names'].append(s[i] + 'aug')
 		
 		#define formulas for seventh chords - currently not being utilized
-		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
+		#elif (first_third == triads['major'][0] and second_third == triads['major'][1]):
 
 
-		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
+		#elif (first_third == triads['major'][0] and second_third == triads['major'][1]):
 
 			
-		if (first_third == triads['major'][0] and second_third == triads['major'][1]):
+		#elif (first_third == triads['major'][0] and second_third == triads['major'][1]):
 		
 		i += 1
 
