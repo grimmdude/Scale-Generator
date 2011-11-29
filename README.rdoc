@@ -4,7 +4,7 @@ Scale Generator is a function that generates musical scales and other informatio
 
 == Usage
 The function takes two parameters:
-	<script>scaleGen(start, scale_type)</script>
+	$ scaleGen(start, scale_type)
 	
 
 
