@@ -13,7 +13,7 @@ The function takes two parameters:
 
 === The root note of the scale
 
-	scale.root
+    scale.root
 
 
 
