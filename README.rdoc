@@ -33,3 +33,8 @@ The function can be used as a javascript file (scale_generator.js) or as a pytho
 start_note: Can be any one of the following numbers which represent a note: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 scale_type: major, blues, natural_minor, harmonic_minor, melodic_minor
 
+== Want to try it out?
+
+Install or update following Rubygems <b>on the local machine or server where you want to run it</b>:
+
+    $ sudo gem install sinatra rack haml capistrano capistrano-ext thin
