@@ -35,7 +35,5 @@ scale_type: major, blues, natural_minor, harmonic_minor, melodic_minor
 
 == Want to try it out?
 
-Install or update following Rubygems <b>on the local machine or server where you want to run it</b>:
-
-    $ sudo gem install sinatra rack haml capistrano capistrano-ext thin
+    scaleGen(start, scale_type)
 	
