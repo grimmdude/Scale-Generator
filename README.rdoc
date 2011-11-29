@@ -5,7 +5,7 @@ Scale Generator is a function that generates musical scales and other informatio
 == Usage
 The function takes two parameters:
     
-	var scale = scaleGen(start, scale_type)
+    var scale = scaleGen(start, scale_type)
 	
 === An array containing the notes of the scale.
 
@@ -41,5 +41,5 @@ start_note: Can be any one of the following numbers which represent a note: 0, 1
 scale_type: major, blues, natural_minor, harmonic_minor, melodic_minor
 
 
-
+var scale = scaleGen(start, scale_type)
 	
