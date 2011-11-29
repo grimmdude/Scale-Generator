@@ -39,6 +39,10 @@ Can be any of the following scale types:
 
     scale.diatonic_triad_names
 
+=== An array containing an array of note names for each diatonic seventh chord.
+
+    scale.diatonic_seventh_notes
+
 === An array containing the notes of the pentatonic scale.
 
     scale.pentatonic_scale
