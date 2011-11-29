@@ -4,7 +4,7 @@ Scale Generator is a function that generates musical scales and other informatio
 
 == Usage
 The function takes two parameters:
-	$ scaleGen(start, scale_type)
+    scaleGen(start, scale_type)
 	
 
 
@@ -33,7 +33,6 @@ The function can be used as a javascript file (scale_generator.js) or as a pytho
 start_note: Can be any one of the following numbers which represent a note: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 scale_type: major, blues, natural_minor, harmonic_minor, melodic_minor
 
-== Want to try it out?
 
-    scaleGen(start, scale_type)
+
 	
