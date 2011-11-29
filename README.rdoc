@@ -4,11 +4,18 @@ Scale Generator is a function that generates musical scales and other informatio
 
 == Usage
 The function takes two parameters:
-    scaleGen(start, scale_type)
+    
+	var scale = scaleGen(start, scale_type)
 	
+=== An array containing the notes of the scale.
+
+    scale.the_scale
+
+=== The root note of the scale
+
+	scale.root
 
 
-the_scale = An array containing the notes of the scale.  eg ['C','D','E','F','G','A','B']
 
 root = Returns the root note of the scale.  eg 'C'
 
