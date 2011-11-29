@@ -16,7 +16,7 @@ Can be any note expressed as a number:
 
     0 = C, 1 = C#, 2 = D, 3 = Eb, 4 = E, 5 = F, 6 = F#, 7 = G, 8 = G#, 9 = A, 10 = Bb
 
-=== scale_type
+==== scale_type
 Can be any of the following scale types:
 
     major, natural_minor, harmonic_minor, melodic_minor, blues
@@ -58,12 +58,3 @@ Can be any of the following scale types:
 === Returns an array containing the intervals of the scale in half steps.
 
     scale.scale_intervals
-
-
-
-start_note: Can be any one of the following numbers which represent a note: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-scale_type: major, blues, natural_minor, harmonic_minor, melodic_minor
-
-
-var scale = scaleGen(start, scale_type)
-	
