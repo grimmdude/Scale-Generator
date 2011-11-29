@@ -1,4 +1,12 @@
-Scale Generator is a function, scaleGen(start_note, scale_type), that generates musical scales and other information for a given key.  The information is returned in an object with the following keys:
+= Scale Generator 
+
+Scale Generator is a function that generates musical scales and other information for a given key.  
+
+== Usage
+The function takes two parameters:
+	scaleGen(start, scale_type)
+	
+
 
 the_scale = An array containing the notes of the scale.  eg ['C','D','E','F','G','A','B']
 
