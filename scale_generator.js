@@ -31,7 +31,7 @@ function scaleGen(start, scale) {
 	};
 	
 	//defaults to C Major if no arguments are passed
-	start = (!start) ? 0 : start;
+	start = (!start) ? 0 : parseFloat(start);
 	scaleIntervals = (!scale) ? scales.major : scales[scale];
 	
 	if (scaleIntervals !== scales.major) {//specify which notes to use for this key.
