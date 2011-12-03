@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Scale Generator - grimmdude.com</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+<script src="js/scale_generator.js"></script>
+<script src="js/jquery-1.7.min.js"></script>
+<script>
+$(function() {
+	$('#key, #type').change(function() {
+		var key = $('#key').val();
+		var type = $('#type').val();
+			
+		$.each(scaleGen(key, type).the_scale, function(key, value) {	
+			$('#results').append(value + ', ');
+		});
+		console.log(scaleGen(key, type).the_scale);
+	});
+	
+});
+
+</script>
+</head>
+<body>
+	<div id="wrapper">
+		<h2>Scale Generator</h2>
+		<label for="key">Key</label>
+		<input name="key" id="key" />
+		<label for="type">Scale Type</label>
+		<input name="type" id="type" />
+		<div id="results"></div>
+		<p><a href="https://github.com/grimmdude/Scale-Generator">GitHub Repo</a></p>
+	</div>
+</body>
+</html>
+
