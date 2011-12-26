@@ -3,6 +3,7 @@
 //www.musictheory.com/scale-generator
 
 function scaleGen(start, scale) {
+
 	var notes, scales, triads, the_key, s, scale_type, notes_array, i, start_reference,
 		total;
 	
