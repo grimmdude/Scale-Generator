@@ -37,14 +37,6 @@ def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
 	Returns a list of notes for a given triad.  Can be returned in notes or number format.
 	"""
 	
-	# Define triad intervals
-	triads = {
-		'major' : [4, 3],
-		'minor' : [3, 4],
-		'dim' : [3, 3],
-		'aug' : [4, 4]
-	}
-
 	# Get the scale
 	scale = makeScale(root, scale)
 	
@@ -55,6 +47,52 @@ def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
 		triad = [noteToNumber(n) for n in triad]
 	
 	return triad
+	
+def noteInterval(note1, note2):
+	
+	# Convert notes to numbers
+	note1 = noteToNumber(note1)
+	note2 = noteToNumber(note2)
+	
+	interval = note2 - note1
+	
+	# If we've gone around master note list interval will be negative.  Resolve by adding 12.
+	if interval < 0:
+		interval = interval + 12
+		
+	return interval
+	
+def triadType(notes):
+	"""
+	Takes a list of 3 note names and returns triad name string.  Returns None if there's no match.
+	"""
+	
+	# Define triad intervals
+	triads = {
+		'major' : [4, 3],
+		'minor' : [3, 4],
+		'dim' : [3, 3],
+		'aug' : [4, 4]
+	}
+	
+	# Convert notes to numbers
+	# notes = [noteToNumber(n) for n in notes]
+
+	notes_intervals = []
+	
+	# Loop through notes and create a list, length 2, of intervals to check against
+	for i in range(2):
+		
+		interval = noteInterval(notes[i], notes[i+1])
+			
+		notes_intervals.append(interval)
+	
+	# Finally loop through the traids dict to see if we have a match	
+	for t in triads.keys():
+		if triads[t] == notes_intervals:
+			return t
+		
+	return None
 	
 def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 	"""
