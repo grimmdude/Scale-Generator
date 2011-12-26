@@ -1,9 +1,13 @@
+#!/usr/bin/python
 # 2011 Garrett Grimm
 # www.grimmdude.com
 
 
 # Define scale types
 # These are intervals between notes, 1:half step, 2:whole step
+
+# Import sys module for command line operations
+import sys
 
 def customScale(notes):
 	
@@ -32,6 +36,7 @@ def pentatonic(root = 'C', scale = 'major'):
 	return pentatonic
 	
 def guessChord(notes):
+	return
 	
 
 def noteToNumber(note):
@@ -41,7 +46,7 @@ def noteToNumber(note):
 	
 	# Define notes/numbers combo
 	notes_numbers = {
-		'C' : 0, 'C#' : 1, 'D' : 2, 'D#' : 3, 'Eb' : 3, 'E' : 4, 
+		'C' : 0, 'C#' : 1, 'Db' : 1, 'D' : 2, 'D#' : 3, 'Eb' : 3, 'E' : 4, 
 		'F' : 5, 'F#' : 6, 'Gb' : 6, 'G' : 7, 'G#' : 8, 'Ab' : 8,
 		'A' : 9, 'A#' : 10, 'Bb' : 10, 'B' : 11, 'Cb' : 11
 	}
@@ -80,21 +85,7 @@ def relativeKey(root = 'C', scale = 'major'):
 	
 	return relative
 
-def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
-	"""
-	Returns a list of notes for a given triad.  Can be returned in notes or number format.
-	"""
-	
-	# Get the scale
-	scale = makeScale(root, scale)
-	
-	triad = [scale[0], scale[2], scale[4]]
-		
-	if return_type == 'numbers':
-		# Make the numbers triad from the notes triad
-		triad = [noteToNumber(n) for n in triad]
-	
-	return triad
+
 	
 def noteInterval(note1, note2):
 	"""
@@ -112,6 +103,31 @@ def noteInterval(note1, note2):
 		interval = interval + 12
 		
 	return interval
+	
+
+def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
+	"""
+	Returns a list of notes for a given triad.  Can be returned in notes or number format.
+	"""
+	
+	# Need to support major,minor,aug,dim.  Currently just supports major.
+	
+	actual_scale = scale
+	
+	if scale == 'minor':
+		actual_scale = 'natural_minor'
+
+	# Get the scale
+	scale = makeScale(root, actual_scale)
+
+	triad = [scale[0], scale[2], scale[4]]
+
+	if return_type == 'numbers':
+		# Make the numbers triad from the notes triad
+		triad = [noteToNumber(n) for n in triad]
+
+	return triad
+
 	
 def triadType(notes):
 	"""
@@ -317,3 +333,67 @@ def scaleGen(start = 0, scale = 'major'):
 		i += 1
 
 	return the_key
+	
+def main():
+	# This command-line parsing code is provided.
+	# Make a list of command line arguments, omitting the [0] element
+	# which is the script itself.
+	
+  	args = sys.argv[1:]
+	
+	if not args:
+		print 'usage: [--flag] arguments'
+		sys.exit(1)
+		
+	# makeScale()
+	if args[0] == '--makeScale':
+		if len(args) == 3:
+			print makeScale(args[1], args[2])
+			
+		else:
+			print 'usage: [--makeScale] note scale'
+			
+	# triadNotes()
+	if args[0] == '--triadNotes':
+		if len(args) == 3:
+			print triadNotes(args[1], args[2])
+			
+		else:
+			print 'usage: [--triadNotes] root scale'
+			
+	# triadType()
+	if args[0] == '--triadType':
+		if len(args) == 4:
+			
+			# Put the argument notes into an array
+			arg_notes = []
+			
+			for n in args[1:]:
+				arg_notes.append(n)
+				
+			print triadType(arg_notes)
+		
+		else:
+			print 'usage: [--triadType] notes'
+
+	# NoteToNumber()
+	if args[0] == '--noteToNumber':
+		if len(args) == 2:
+			print noteToNumber(args[1])
+		
+		else:
+			print 'usage: [--noteToNumber] note'
+			
+	# pentatonic()
+	if args[0] == '--pentatonic':
+		if len(args) == 3:
+			print pentatonic(args[1], args[2])
+			
+		else:
+			print 'usage: [--pentatonic] note scale'
+
+
+		
+	
+if __name__ == '__main__':
+	main()
