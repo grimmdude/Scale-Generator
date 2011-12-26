@@ -8,6 +8,31 @@
 def customScale(notes):
 	
 	return
+	
+def pentatonic(root = 'C', scale = 'major'):
+	"""
+	Returns the pentatonic scale of the given root and scale type (major or minor)
+	"""
+	
+	actual_scale = scale
+	
+	# If minor just pass 'natural_minor' to the makeScale function since 'minor' isn't an available arg.
+	if scale == 'minor':
+		actual_scale = 'natural_minor'
+	
+	# Get the full scale
+	s = makeScale(root, actual_scale)
+	
+	if scale == 'major':
+		pentatonic = [s[0], s[1], s[2], s[4], s[5]]
+		
+	elif scale == 'minor':
+		pentatonic = [s[0], s[2], s[3], s[4], s[6]]
+	
+	return pentatonic
+	
+def guessChord(notes):
+	
 
 def noteToNumber(note):
 	"""
@@ -29,8 +54,31 @@ def noteToNumber(note):
 	return number
 	
 def relativeKey(root = 'C', scale = 'major'):
+	"""
+	Returns the root note of the relative key.
 	
-	return
+	scale = 'major' or 'minor'
+	"""
+	
+	actual_scale = scale
+	
+	# If minor just pass 'natural_minor' to the makeScale function since 'minor' isn't an available arg.
+	if scale == 'minor':
+		actual_scale = 'natural_minor'
+	
+	# First make the requested scale
+	s = makeScale(root, actual_scale)
+	
+	if scale == 'major':
+		relative = s[5]
+		
+	elif scale == 'minor':
+		relative = s[2]
+		
+	else:
+		relative = None
+	
+	return relative
 
 def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
 	"""
@@ -49,6 +97,9 @@ def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
 	return triad
 	
 def noteInterval(note1, note2):
+	"""
+	Returns the number interval of two given notes
+	"""
 	
 	# Convert notes to numbers
 	note1 = noteToNumber(note1)
@@ -111,6 +162,7 @@ def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 		'flats' : ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 	};
 	
+	# Define the possible scale intervals
 	scales = {
 		'major' : [2, 2, 1, 2, 2, 2],
 		'blues' : [3, 2, 1, 1, 3],
@@ -122,14 +174,14 @@ def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 	#specify which notes to use for this key.
 	if (scales[scale] == scales['major']):
 		#specify which 'notes' array to use for major keys
-		if (root == 1 or root == 3 or root == 5 or root == 8 or root == 10):
+		if root in [1, 3, 5, 8, 10]:
 			notes_array = notes['flats']
 		else:
 			notes_array = notes['sharps']
 	
 	else:
 		#specify which 'notes' array to use for minor keys
-		if (root == 0 or root == 1 or root == 2 or root == 3 or root == 5 or root == 7 or root == 8 or root == 10):
+		if root in [0, 1, 2, 3, 5, 7, 8, 10]:
 			notes_array = notes['flats']
 		else:
 			notes_array = notes['sharps']
@@ -144,9 +196,8 @@ def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 	# Create return_scale list
 	# Use the start_reference array to pull notes from the notes array 
 	# Referencing from the root note.
-	i = 0
-
-	while (i <= len(scales[scale])):
+		
+	for i in range(len(scales[scale])+1):
 		
 		#add the current interval and add one by one to the start_reference array
 		if i < len(scales[scale]):
@@ -155,7 +206,7 @@ def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 		start_reference.append(total)
 
 		#minus 1 to account for the starting note
-		if (i == 0):
+		if i == 0:
 			current_note = root
 		else:
 			current_note = root + start_reference[i - 1]
@@ -174,7 +225,6 @@ def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 		else:
 			return None
 			
-		i += 1
 		
 	return return_scale
 
