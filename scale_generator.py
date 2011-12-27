@@ -32,32 +32,71 @@ def pentatonic(root = 'C', scale = 'major'):
 		
 	elif scale == 'minor':
 		pentatonic = [s[0], s[2], s[3], s[4], s[6]]
+		
+	else:
+		return None
 	
 	return pentatonic
 	
 def guessChord(notes):
-	return
+	"""
+	Takes a list of notes and returns the most likely chord name as a string.
+	"""
+	
+	# If there are only 3 notes it might be a triad.  Quick and easy test:
+	if len(notes) == 3 and triadType(notes):
+		
+		# Return chord type string
+		return notes[0] + ' ' + triadType(notes) + ' ' + 'triad'
+		
+	# Maybe it's a 
+	
+	# Convert notes to numbers
+	notes = [noteToNumber(n)  for n in notes ]
+	
+	# Put numbers in ascending order
+	notes = sorted(notes)
+	
+	
+	
+	return notes
 	
 
-def noteToNumber(note):
+def noteToNumber(note, number = False):
 	"""
-	Convert a note name into it's corresponding number.
+	Convert a note name into it's corresponding number.  
+	Optionally you can pass the number argument to convert a number into it's corresponding note name.
 	"""
 	
 	# Define notes/numbers combo
 	notes_numbers = {
 		'C' : 0, 'C#' : 1, 'Db' : 1, 'D' : 2, 'D#' : 3, 'Eb' : 3, 'E' : 4, 
-		'F' : 5, 'F#' : 6, 'Gb' : 6, 'G' : 7, 'G#' : 8, 'Ab' : 8,
-		'A' : 9, 'A#' : 10, 'Bb' : 10, 'B' : 11, 'Cb' : 11
-	}
+		'F' : 5, 'F#' : 6, 'Gb' : 6, 'G' : 7, 'G#' : 8, 'Ab' : 8, 'A' : 9, 
+		'A#' : 10, 'Bb' : 10, 'B' : 11, 'Cb' : 11
+	}	
 	
-	if note in notes_numbers.keys():
-		number = notes_numbers[note]
-	else:
-		number = None
+	if not number:
+		if note in notes_numbers.keys():
+			number = notes_numbers[note]
+			return number
+		else:
+			return None
 
-	return number
-	
+	elif number:
+
+		if note in notes_numbers.values():
+			
+			# Flip the dict around so that numbers are keys (needs some work since doop keys get overwritten)
+			numbers_notes = {}
+			for n in notes_numbers:
+				numbers_notes[notes_numbers[n]] = n
+				
+			note = numbers_notes[note]
+			return note
+			
+		else:
+			return None
+		
 def relativeKey(root = 'C', scale = 'major'):
 	"""
 	Returns the root note of the relative key.
@@ -87,14 +126,15 @@ def relativeKey(root = 'C', scale = 'major'):
 
 
 	
-def noteInterval(note1, note2):
+def noteInterval(note1, note2, numbers = False):
 	"""
 	Returns the number interval of two given notes
 	"""
 	
-	# Convert notes to numbers
-	note1 = noteToNumber(note1)
-	note2 = noteToNumber(note2)
+	if not numbers:
+		# Convert notes to numbers
+		note1 = noteToNumber(note1)
+		note2 = noteToNumber(note2)
 	
 	interval = note2 - note1
 	
@@ -105,7 +145,7 @@ def noteInterval(note1, note2):
 	return interval
 	
 
-def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
+def triadNotes(root = 'C', scale = 'major', return_numbers = False):
 	"""
 	Returns a list of notes for a given triad.  Can be returned in notes or number format.
 	"""
@@ -122,7 +162,7 @@ def triadNotes(root = 'C', scale = 'major', return_type = 'notes'):
 
 	triad = [scale[0], scale[2], scale[4]]
 
-	if return_type == 'numbers':
+	if return_numbers:
 		# Make the numbers triad from the notes triad
 		triad = [noteToNumber(n) for n in triad]
 
@@ -142,17 +182,19 @@ def triadType(notes):
 		'aug' : [4, 4]
 	}
 	
-	# Convert notes to numbers
-	# notes = [noteToNumber(n) for n in notes]
+	# Convert notes to a list of numbers
+	notes = [noteToNumber(n) for n in notes]
 
 	notes_intervals = []
 	
 	# Loop through notes and create a list, length 2, of intervals to check against
 	for i in range(2):
 		
-		interval = noteInterval(notes[i], notes[i+1])
+		interval = noteInterval(notes[i], notes[i+1], True)
 			
 		notes_intervals.append(interval)
+		
+	return notes_intervals
 	
 	# Finally loop through the traids dict to see if we have a match	
 	for t in triads.keys():
@@ -161,7 +203,7 @@ def triadType(notes):
 		
 	return None
 	
-def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
+def makeScale(root = 'C', scale = 'major', return_numbers = False):
 	"""
 	Generates a list of notes or corresponding numbers forming the specified scale.
 	
@@ -232,10 +274,10 @@ def makeScale(root = 'C', scale = 'major', return_type = 'notes'):
 			current_note = current_note - 12
 			
 		# Generate notes or numbers, depending on the argument passed
-		if return_type == 'notes':
+		if not return_numbers:
 			return_scale.append(notes_array[current_note])
 			
-		elif return_type == 'numbers':
+		elif return_numbers:
 			return_scale.append(noteToNumber(notes_array[current_note]))
 			
 		else:
@@ -335,10 +377,9 @@ def scaleGen(start = 0, scale = 'major'):
 	return the_key
 	
 def main():
-	# This command-line parsing code is provided.
-	# Make a list of command line arguments, omitting the [0] element
-	# which is the script itself.
+	# Command line goodies.
 	
+	# Check for args starting at index 1 since 0 is the script itself
   	args = sys.argv[1:]
 	
 	if not args:
@@ -346,23 +387,23 @@ def main():
 		sys.exit(1)
 		
 	# makeScale()
-	if args[0] == '--makeScale':
+	if args[0] in ['--makeScale', '-ms']:
 		if len(args) == 3:
 			print makeScale(args[1], args[2])
 			
 		else:
-			print 'usage: [--makeScale] note scale'
+			print 'usage: [--makeScale, -ms] note scale'
 			
 	# triadNotes()
-	if args[0] == '--triadNotes':
+	if args[0] in ['--triadNotes', '-tn']:
 		if len(args) == 3:
 			print triadNotes(args[1], args[2])
 			
 		else:
-			print 'usage: [--triadNotes] root scale'
+			print 'usage: [--triadNotes, -tn] root scale'
 			
 	# triadType()
-	if args[0] == '--triadType':
+	if args[0] in ['--triadType', '-tt']:
 		if len(args) == 4:
 			
 			# Put the argument notes into an array
@@ -374,23 +415,23 @@ def main():
 			print triadType(arg_notes)
 		
 		else:
-			print 'usage: [--triadType] notes'
+			print 'usage: [--triadType, -tt] notes'
 
 	# NoteToNumber()
-	if args[0] == '--noteToNumber':
+	if args[0] in ['--noteToNumber', '-nn']:
 		if len(args) == 2:
 			print noteToNumber(args[1])
 		
 		else:
-			print 'usage: [--noteToNumber] note'
+			print 'usage: [--noteToNumber, -nn] note'
 			
 	# pentatonic()
-	if args[0] == '--pentatonic':
+	if args[0] in ['--pentatonic', '-p']:
 		if len(args) == 3:
 			print pentatonic(args[1], args[2])
 			
 		else:
-			print 'usage: [--pentatonic] note scale'
+			print 'usage: [--pentatonic, -p] note scale'
 
 
 		
