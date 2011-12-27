@@ -192,8 +192,6 @@ def triadType(notes):
 		interval = noteInterval(notes[i], notes[i+1], True)
 			
 		notes_intervals.append(interval)
-		
-	return notes_intervals
 	
 	# Finally loop through the traids dict to see if we have a match	
 	for t in triads.keys():
