@@ -150,7 +150,7 @@ def triadNotes(root = 'C', scale = 'major', return_numbers = False):
 	Returns a list of notes for a given triad.  Can be returned in notes or number format.
 	"""
 	
-	# Need to support major,minor,aug,dim.  Currently just supports major.
+	# Need to support aug,dim.  Currently just supports major & minor.
 	
 	actual_scale = scale
 	
@@ -184,6 +184,9 @@ def triadType(notes):
 	
 	# Convert notes to a list of numbers
 	notes = [noteToNumber(n) for n in notes]
+	
+	# Sort notes so that they are in order
+	## Code here...
 
 	notes_intervals = []
 	
