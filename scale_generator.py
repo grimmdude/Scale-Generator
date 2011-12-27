@@ -56,42 +56,58 @@ def guessChord(notes):
 	
 	
 	return notes
-	
 
-def noteToNumber(note, number = False):
+def noteToNumber(note_):
 	"""
-	Convert a note name into it's corresponding number.  
-	Optionally you can pass the number argument to convert a number into it's corresponding note name.
+	Convert a note name into it's corresponding number or vice versa.  
 	"""
 	
-	# Define notes/numbers combo
-	notes_numbers = {
-		'C' : 0, 'C#' : 1, 'Db' : 1, 'D' : 2, 'D#' : 3, 'Eb' : 3, 'E' : 4, 
-		'F' : 5, 'F#' : 6, 'Gb' : 6, 'G' : 7, 'G#' : 8, 'Ab' : 8, 'A' : 9, 
-		'A#' : 10, 'Bb' : 10, 'B' : 11, 'Cb' : 11
-	}	
+	# Define natural notes
+	notes_numbers = {'C' : 0, 'D' : 2, 'E' : 4, 'F' : 5, 'G' : 7, 'A' : 9, 'B' : 11}
 	
-	if not number:
-		if note in notes_numbers.keys():
-			number = notes_numbers[note]
-			return number
-		else:
-			return None
-
-	elif number:
-
-		if note in notes_numbers.values():
+	# Create a reversed version of notes_numbers dict (number:note)
+	numbers_notes = {}
+	for n in notes_numbers:
+		numbers_notes[notes_numbers[n]] = n
+	
+	# Define accidental values
+	accidentals = {'#' : 1, 'b' : -1}
+	
+	
+	# Check to see if this is a number
+	if note_ in str(range(12)):
+		
+		# Convert it to an int
+		note_ = int(note_)
+		
+		# First check if it's a natural note
+		if note_ in numbers_notes.keys():
+			return_note = numbers_notes[note_]
 			
-			# Flip the dict around so that numbers are keys (needs some work since doop keys get overwritten)
-			numbers_notes = {}
-			for n in notes_numbers:
-				numbers_notes[notes_numbers[n]] = n
-				
-			note = numbers_notes[note]
-			return note
+			return return_note
 			
+		# If it's not a natural note then we need to add accidentals to get the number to match
 		else:
-			return None
+			return_note = numbers_notes[note_ + accidentals['#']]  + accidentals.keys().index('#')
+		
+		
+			
+	# It's a note name, not a number
+	else:
+		# No accidental
+		if len(note_) == 1:
+			return_number = notes_numbers[note_]
+		
+		# Single accidental
+		if len(note_) == 2:
+			return_number = notes_numbers[note_[0]] + accidentals[note_[1]]
+		
+		# Fix negative numbers
+		if return_number < 0:
+			return_number = return_number + 12
+		
+		return return_number
+		
 		
 def relativeKey(root = 'C', scale = 'major'):
 	"""
@@ -120,8 +136,6 @@ def relativeKey(root = 'C', scale = 'major'):
 	
 	return relative
 
-
-	
 def noteInterval(note1, note2, numbers = False):
 	"""
 	Returns the number interval of two given notes
@@ -429,9 +443,22 @@ def main():
 			
 		else:
 			print 'usage: [--pentatonic, -p] note scale'
+			
+	# guessChord()
+	if args[0] in ['--guessChord', '-gc']:
+			if len(args) > 1:
+				# Put the argument notes into an array
+				arg_notes = []
+				
+				for n in args[1:]:
+					arg_notes.append(n)
+					
+				print guessChord(arg_notes)
+				
+			else:
+				print 'usage: [--guessChord, -gc] note note ...'
+				
 
-
-		
 	
 if __name__ == '__main__':
 	main()
