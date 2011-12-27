@@ -2,10 +2,6 @@
 # 2011 Garrett Grimm
 # www.grimmdude.com
 
-
-# Define scale types
-# These are intervals between notes, 1:half step, 2:whole step
-
 # Import sys module for command line operations
 import sys
 
