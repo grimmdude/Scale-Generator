@@ -57,7 +57,7 @@ def guessChord(notes):
 	
 	return notes
 
-def noteToNumber(note_):
+def noteToNumber(note_, number_ = False):
 	"""
 	Convert a note name into it's corresponding number or vice versa.  
 	"""
@@ -65,20 +65,21 @@ def noteToNumber(note_):
 	# Define natural notes
 	notes_numbers = {'C' : 0, 'D' : 2, 'E' : 4, 'F' : 5, 'G' : 7, 'A' : 9, 'B' : 11}
 	
+	# Define accidental values
+	accidentals_numbers = {'#' : 1, 'b' : -1, 'bb' : -2}
+	
 	# Create a reversed version of notes_numbers dict (number:note)
 	numbers_notes = {}
 	for n in notes_numbers:
 		numbers_notes[notes_numbers[n]] = n
 	
-	# Define accidental values
-	accidentals = {'#' : 1, 'b' : -1}
-	
+	# Create a reversed version of accidentals dict (number:accidental)
+	numbers_accidentals = {}
+	for n in accidentals_numbers:
+		numbers_accidentals[accidentals_numbers[n]] = n
 	
 	# Check to see if this is a number
-	if note_ in str(range(12)):
-		
-		# Convert it to an int
-		note_ = int(note_)
+	if number_:
 		
 		# First check if it's a natural note
 		if note_ in numbers_notes.keys():
@@ -88,9 +89,10 @@ def noteToNumber(note_):
 			
 		# If it's not a natural note then we need to add accidentals to get the number to match
 		else:
-			return_note = numbers_notes[note_ + accidentals['#']]  + accidentals.keys().index('#')
-		
-		
+	
+			return_note = numbers_notes[note_ + accidentals_numbers['#']] + numbers_accidentals[1]
+			return return_note
+
 			
 	# It's a note name, not a number
 	else:
@@ -99,8 +101,8 @@ def noteToNumber(note_):
 			return_number = notes_numbers[note_]
 		
 		# Single accidental
-		if len(note_) == 2:
-			return_number = notes_numbers[note_[0]] + accidentals[note_[1]]
+		elif len(note_) == 2:
+			return_number = notes_numbers[note_[0]] + accidentals_numbers[note_[1]]
 		
 		# Fix negative numbers
 		if return_number < 0:
@@ -195,8 +197,12 @@ def triadType(notes):
 	# Convert notes to a list of numbers
 	notes = [noteToNumber(n) for n in notes]
 	
+	# Make a list of all natural notes for reference
+	all_notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
+	
 	# Sort notes so that they are in order
-	## Code here...
+	# sorted(s, key=lambda note: n.index(note)
+	
 
 	notes_intervals = []
 	
@@ -206,6 +212,8 @@ def triadType(notes):
 		interval = noteInterval(notes[i], notes[i+1], True)
 			
 		notes_intervals.append(interval)
+		
+	return notes_intervals
 	
 	# Finally loop through the traids dict to see if we have a match	
 	for t in triads.keys():
