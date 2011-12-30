@@ -2,7 +2,6 @@
 # 2011 Garrett Grimm
 # www.grimmdude.com
 
-# Import sys module for command line operations
 import sys
 import itertools
 
@@ -78,6 +77,7 @@ def noteToNumber(note_, number_ = False):
 	numbers_accidentals = {}
 	for n in accidentals_numbers:
 		numbers_accidentals[accidentals_numbers[n]] = n
+		
 	
 	# Check to see if this is a number
 	if number_:
@@ -91,7 +91,7 @@ def noteToNumber(note_, number_ = False):
 		# If it's not a natural note then we need to add accidentals to get the number to match
 		else:
 	
-			return_note = numbers_notes[note_ + accidentals_numbers['#']] + numbers_accidentals[1]
+			return_note = numbers_notes[note_ + accidentals_numbers['#']] + numbers_accidentals[1:]
 			return return_note
 
 			
@@ -101,9 +101,9 @@ def noteToNumber(note_, number_ = False):
 		if len(note_) == 1:
 			return_number = notes_numbers[note_]
 		
-		# Single accidental
-		elif len(note_) == 2:
-			return_number = notes_numbers[note_[0]] + accidentals_numbers[note_[1]]
+		# Accidental
+		elif len(note_) > 1:
+			return_number = notes_numbers[note_[0]] + accidentals_numbers[note_[1:]]
 		
 		# Fix negative numbers
 		if return_number < 0:
@@ -216,19 +216,7 @@ def triadType(notes):
 				return t
 
 	return None
-	
-	
-def all_perms(str):
-	"""
-	Get all possible permutations of a string.  Used to test different combinations of notes for possible chords.  Returns a generator object.
-	"""
-	if len(str) <=1:
-		yield str
-	else:
-		for perm in all_perms(str[1:]):
-			for i in range(len(perm)+1):
-				#nb str[0:1] works in both string and list contexts
-				yield perm[:i] + str[0:1] + perm[i:]
+
 	
 def makeScale(root = 'C', scale = 'major', return_numbers = False):
 	"""
