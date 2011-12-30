@@ -82,56 +82,73 @@ def noteToNumber(note_, number_ = False):
 	# Check to see if this is a number
 	if number_:
 		
-		# First check if it's a natural note
-		if note_ in numbers_notes.keys():
-			return_note = numbers_notes[note_]
+		# Only accept numbers 0 - 11
+		if note_ in range(12):
+		
+			# First check if it's a natural note
+			if note_ in numbers_notes.keys():
+				return_note = numbers_notes[note_]
 			
-			return return_note
+				return return_note
 			
-		# If it's not a natural note then we need to add accidentals to get the number to match
-		else:
+			# If it's not a natural note then we need to add accidentals to get the number to match
+			else:
 	
-			return_note = numbers_notes[note_ + accidentals_numbers['#']] + numbers_accidentals[1:]
-			return return_note
+				return_note = numbers_notes[note_ + accidentals_numbers['#']] + numbers_accidentals[1]
+				return return_note
+				
+		else:
+			return None
 
 			
 	# It's a note name, not a number
-	else:
-		# No accidental
-		if len(note_) == 1:
-			return_number = notes_numbers[note_]
+	elif not number_:
 		
-		# Accidental
-		elif len(note_) > 1:
-			return_number = notes_numbers[note_[0]] + accidentals_numbers[note_[1:]]
+		# Only accept available note names
+		if note_[0] in notes_numbers.keys():
 		
-		# Fix negative numbers
-		if return_number < 0:
-			return_number = return_number + 12
+			# No accidental
+			if len(note_) == 1:
+				return_number = notes_numbers[note_]
 		
-		return return_number
+			# Accidental
+			elif len(note_) > 1:
+				return_number = notes_numbers[note_[0]] + accidentals_numbers[note_[1:]]
+		
+			# Fix negative numbers
+			if return_number < 0:
+				return_number = return_number + 12
+		
+			return return_number
+			
+		else:
+			return None
 		
 		
-def relativeKey(root = 'C', scale = 'major'):
+def relativeKey(root_ = 'C', scale_ = 'major'):
 	"""
 	Returns the root note of the relative key.
 	
 	scale = 'major' or 'minor'
 	"""
 	
-	actual_scale = scale
+	# Check for accepted scale types
+	if scale_ not in ['major','minor']:
+		return 'Not a valid scale type.  ["major", "minor"]'
+	
+	actual_scale = scale_
 	
 	# If minor just pass 'natural_minor' to the makeScale function since 'minor' isn't an available arg.
-	if scale == 'minor':
+	if scale_ == 'minor':
 		actual_scale = 'natural_minor'
 	
 	# First make the requested scale
-	s = makeScale(root, actual_scale)
+	s = makeScale(root_, actual_scale)
 	
-	if scale == 'major':
+	if scale_ == 'major':
 		relative = s[5]
 		
-	elif scale == 'minor':
+	elif scale_ == 'minor':
 		relative = s[2]
 		
 	else:
@@ -139,17 +156,17 @@ def relativeKey(root = 'C', scale = 'major'):
 	
 	return relative
 
-def noteInterval(note1, note2, numbers = False):
+def noteInterval(note1_, note2_, numbers_ = False):
 	"""
 	Returns the number interval of two given notes
 	"""
 	
-	if not numbers:
+	if not numbers_:
 		# Convert notes to numbers
-		note1 = noteToNumber(note1)
-		note2 = noteToNumber(note2)
+		note1_ = noteToNumber(note1_)
+		note2_ = noteToNumber(note2_)
 	
-	interval = note2 - note1
+	interval = note2_ - note1_
 	
 	# If we've gone around master note list interval will be negative.  Resolve by adding 12.
 	if interval < 0:
