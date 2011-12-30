@@ -2,6 +2,7 @@
 
 Scale Generator is a function that generates musical scales and other information for a given key.
 
+Readme is about to change completely.  Ballzac!
 
 
 == Usage

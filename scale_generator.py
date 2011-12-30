@@ -4,6 +4,7 @@
 
 # Import sys module for command line operations
 import sys
+import itertools
 
 def customScale(notes):
 	
@@ -183,7 +184,7 @@ def triadNotes(root = 'C', scale = 'major', return_numbers = False):
 	
 def triadType(notes):
 	"""
-	Takes a list of 3 note names and returns triad name string.  Returns None if there's no match.
+	Takes a list of 3 note names in any order and returns triad name string if one exists.  Returns None if there's no match.
 	"""
 	
 	# Define triad intervals
@@ -197,30 +198,37 @@ def triadType(notes):
 	# Convert notes to a list of numbers
 	notes = [noteToNumber(n) for n in notes]
 	
-	# Make a list of all natural notes for reference
-	all_notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
+	# Get all possible permutations of these notes
+	note_perms = list(itertools.permutations(notes))
 	
-	# Sort notes so that they are in order
-	# sorted(s, key=lambda note: n.index(note)
-	
+	# Test each permutation against the possible triad intervals and return the triad type if there's a match.
+	for i in range(len(note_perms)-1):		
+		notes_intervals = []
 
-	notes_intervals = []
-	
-	# Loop through notes and create a list, length 2, of intervals to check against
-	for i in range(2):
-		
-		interval = noteInterval(notes[i], notes[i+1], True)
-			
-		notes_intervals.append(interval)
-		
-	return notes_intervals
-	
-	# Finally loop through the traids dict to see if we have a match	
-	for t in triads.keys():
-		if triads[t] == notes_intervals:
-			return t
-		
+		# Loop through notes and create a list, length 2, of intervals to check against
+		for j in range(2):
+			interval = noteInterval(note_perms[i][j], note_perms[i][j+1], True)
+			notes_intervals.append(interval)
+
+		# Finally loop through the traids dict to see if we have a match	
+		for t in triads.keys():
+			if triads[t] == notes_intervals:
+				return t
+
 	return None
+	
+	
+def all_perms(str):
+	"""
+	Get all possible permutations of a string.  Used to test different combinations of notes for possible chords.  Returns a generator object.
+	"""
+	if len(str) <=1:
+		yield str
+	else:
+		for perm in all_perms(str[1:]):
+			for i in range(len(perm)+1):
+				#nb str[0:1] works in both string and list contexts
+				yield perm[:i] + str[0:1] + perm[i:]
 	
 def makeScale(root = 'C', scale = 'major', return_numbers = False):
 	"""
@@ -409,17 +417,21 @@ def main():
 	if args[0] in ['--makeScale', '-ms']:
 		if len(args) == 3:
 			print makeScale(args[1], args[2])
+			sys.exit(0)
 			
 		else:
 			print 'usage: [--makeScale, -ms] note scale'
+			sys.exit(1)
 			
 	# triadNotes()
 	if args[0] in ['--triadNotes', '-tn']:
 		if len(args) == 3:
 			print triadNotes(args[1], args[2])
+			sys.exit(0)
 			
 		else:
 			print 'usage: [--triadNotes, -tn] root scale'
+			sys.exit(1)
 			
 	# triadType()
 	if args[0] in ['--triadType', '-tt']:
@@ -432,25 +444,31 @@ def main():
 				arg_notes.append(n)
 				
 			print triadType(arg_notes)
+			sys.exit(0)
 		
 		else:
 			print 'usage: [--triadType, -tt] notes'
+			sys.exit(1)
 
 	# NoteToNumber()
 	if args[0] in ['--noteToNumber', '-nn']:
 		if len(args) == 2:
 			print noteToNumber(args[1])
+			sys.exit(0)
 		
 		else:
 			print 'usage: [--noteToNumber, -nn] note'
+			sys.exit(1)
 			
 	# pentatonic()
 	if args[0] in ['--pentatonic', '-p']:
 		if len(args) == 3:
 			print pentatonic(args[1], args[2])
+			sys.exit(0)
 			
 		else:
 			print 'usage: [--pentatonic, -p] note scale'
+			sys.exit(1)
 			
 	# guessChord()
 	if args[0] in ['--guessChord', '-gc']:
@@ -462,9 +480,11 @@ def main():
 					arg_notes.append(n)
 					
 				print guessChord(arg_notes)
+				sys.exit(0)
 				
 			else:
 				print 'usage: [--guessChord, -gc] note note ...'
+				sys.exit(1)
 				
 
 	
