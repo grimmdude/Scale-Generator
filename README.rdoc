@@ -9,7 +9,17 @@ Returns an array containing the notes the desired scale.  Scale types are major,
     $ /.scale_generator.py --makeScale C major
 
 === --triadNotes, -tn:
-Returns an array containing the notes the desired triad.  Available types are major & minor.
+Returns an array containing the notes of the desired triad.  Available types are major & minor.
 
     $ /.scale_generator.py --triadNotes C major
+
+=== --triadType, -tt:
+Returns a string signifying the triad type.  Takes three notes in any order.
+
+    $ /.scale_generator.py --triadType E G C
+
+=== --pentatonic, -p:
+Returns an array containing the notes of the desired pentatonic scale.  Available types are major & minor.
+
+    $ /.scale_generator.py --pentatonic E major
 
