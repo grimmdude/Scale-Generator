@@ -1,65 +1,15 @@
 = Scale Generator 
 
-Scale Generator is a function that generates musical scales and other information for a given key.
+Scale Generator is a Python module that contains a bunch of functions which allow you to work with musical notes and scales.  Many of the functions can also be used from the command line.
 
-Readme is about to change completely.  Ballzac!
-
-
-== Usage
-The function takes two parameters; start and scale_type.  Here's an example of how you could use it:
+== Command Line
+=== --makeScale, -ms:
+Returns an array containing the notes the desired scale.  Scale types are major, natural_minor, melodic_minor, harmonic_minor, blues.
     
-    var scale = scaleGen(root_note, scale_type)
+    $ /.scale_generator.py --makeScale C major
 
-=== Possible Parameters
+=== --triadNotes, -tn:
+Returns an array containing the notes the desired triad.  Available types are major & minor.
 
-==== root_note
-Can be any note expressed as a number:
+    $ /.scale_generator.py --triadNotes C major
 
-    0 = C, 1 = C#, 2 = D, 3 = Eb, 4 = E, 5 = F, 6 = F#, 7 = G, 8 = G#, 9 = A, 10 = Bb
-
-==== scale_type
-Can be any of the following scale types:
-
-    major, natural_minor, harmonic_minor, melodic_minor, blues
-
-== Return Values
-	
-=== An array containing the notes of the scale.
-
-    scale.the_scale
-
-=== The root note of the scale
-
-    scale.root
-
-=== An array containing an array of note names for each diatonic triad.
-
-    scale.diatonic_triad_notes
-
-=== An array containing the names of each diatonic triad.
-
-    scale.diatonic_triad_names
-
-=== An array containing an array of note names for each diatonic seventh chord.
-
-    scale.diatonic_seventh_notes
-
-=== An array containing the notes of the pentatonic scale.
-
-    scale.pentatonic_scale
-
-=== If the scale is major this returns the starting note of the relative minor scale.
-
-    scale.relative_minor
-
-=== If the scale is minor this returns the starting note of the relative major scale.
-
-    scale.relative_major
-
-=== Returns the type of scale passed into the function.
-
-    scale.scale_type
-
-=== Returns an array containing the intervals of the scale in half steps.
-
-    scale.scale_intervals

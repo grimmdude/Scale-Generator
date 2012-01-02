@@ -9,35 +9,14 @@ def customScale(notes):
 	
 	return
 	
-def pentatonic(root = 'C', scale = 'major'):
-	"""
-	Returns the pentatonic scale of the given root and scale type (major or minor)
-	"""
-	
-	actual_scale = scale
-	
-	# If minor just pass 'natural_minor' to the makeScale function since 'minor' isn't an available arg.
-	if scale == 'minor':
-		actual_scale = 'natural_minor'
-	
-	# Get the full scale
-	s = makeScale(root, actual_scale)
-	
-	if scale == 'major':
-		pentatonic = [s[0], s[1], s[2], s[4], s[5]]
-		
-	elif scale == 'minor':
-		pentatonic = [s[0], s[2], s[3], s[4], s[6]]
-		
-	else:
-		return None
-	
-	return pentatonic
+
 	
 def guessChord(notes):
 	"""
 	Takes a list of notes and returns the most likely chord name as a string.
 	"""
+	
+
 	
 	# If there are only 3 notes it might be a triad.  Quick and easy test:
 	if len(notes) == 3 and triadType(notes):
@@ -45,15 +24,18 @@ def guessChord(notes):
 		# Return chord type string
 		return notes[0] + ' ' + triadType(notes) + ' ' + 'triad'
 		
-	# Maybe it's a 
+	# Maybe it's a 7th
+	# Define 7th chord intervals
+	chords = {
+		'major7' : [4, 3, 4],
+		'minor7' : [3, 4, 3],
+		#'dim' : [3, 3],
+		#'aug' : [4, 4]
+	}
 	
 	# Convert notes to numbers
 	notes = [noteToNumber(n)  for n in notes ]
-	
-	# Put numbers in ascending order
-	notes = sorted(notes)
-	
-	
+		
 	
 	return notes
 
@@ -233,6 +215,32 @@ def triadType(notes):
 				return t
 
 	return None
+
+
+def pentatonic(root = 'C', scale = 'major'):
+	"""
+	Returns the pentatonic scale of the given root and scale type (major or minor)
+	"""
+
+	actual_scale = scale
+
+	# If minor just pass 'natural_minor' to the makeScale function since 'minor' isn't an available arg.
+	if scale == 'minor':
+		actual_scale = 'natural_minor'
+
+	# Get the full scale
+	s = makeScale(root, actual_scale)
+
+	if scale == 'major':
+		pentatonic = [s[0], s[1], s[2], s[4], s[5]]
+
+	elif scale == 'minor':
+		pentatonic = [s[0], s[2], s[3], s[4], s[6]]
+
+	else:
+		return None
+
+	return pentatonic
 
 	
 def makeScale(root = 'C', scale = 'major', return_numbers = False):
